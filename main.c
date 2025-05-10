@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2025 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -22,6 +22,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "User_ADC_20221019_1900.h"
+#include "User_Buttons_20221019_1900.h"
+#include "User_RS485_20221019_1900.h"
 
 /* USER CODE END Includes */
 
@@ -95,16 +98,57 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
 
+//  //Correct oder for cube generated init rutins NOTES Start
+#warning ADC DMA to work properly init sequence must be as following TIMx(ADC Trigger Timer) - DMA - ADC, cube generated code might do it differently
+//  MX_TIM3_Init();
+//  MX_DMA_Init();
+//  MX_ADC1_Init();
+
+
+  //for all
+//  MX_GPIO_Init();
+//
+//  MX_TIM2_Init();
+//
+//  MX_TIM3_Init();
+//  MX_DMA_Init();
+//  MX_ADC1_Init();
+//
+//  MX_USART1_UART_Init();
+  //for all
+//  //Correct oder for cube generated init rutins  NOTES End
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_ADC1_Init();
-  MX_TIM2_Init();
-  MX_DMA_Init();
-  MX_TIM3_Init();
-  MX_USART1_UART_Init();
+    MX_GPIO_Init();
+
+    MX_TIM2_Init();
+
+    MX_TIM3_Init();
+    MX_DMA_Init();
+    MX_ADC1_Init();
+
+    MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+
+
+  //----------------------------------------------
+  UserADCInit();
+
+  //----------------------------------------------
+
+
+  //----------------------------------------------
+  UserButtonInit();
+  //----------------------------------------------
+
+
+
+  //----------------------------------------------
+  UserUartInit(&huart1);
+  //----------------------------------------------
+
 
   /* USER CODE END 2 */
 
@@ -115,6 +159,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  HAL_GPIO_TogglePin(LED_0_GPIO_Port, LED_0_Pin);	//BluePill onboard LED
+	  HAL_Delay(200);
   }
   /* USER CODE END 3 */
 }
